@@ -17,17 +17,18 @@ class RiverCard extends React.Component {
     })
     .then((res) => res.json())
     .then( results => {
-        let riverResults = results.value.timeSeries
-        riverResults = riverResults.map( river => {
-          newArray.push({
-            current_date_time: river.values[0].value[0].dateTime,
-            station_name:river.sourceInfo.siteName,
-            current_amount_cfs: parseFloat(river.values[0].value[0].value),
-            usgs_station_id:river.sourceInfo.siteCode[0].value,
-          })
-          return newArray;
+      let riverResults = results.value.timeSeries
+      riverResults = riverResults.map( river => {
+        newArray.push({
+          current_date_time: river.values[0].value[0].dateTime,
+          station_name:river.sourceInfo.siteName,
+          current_amount_cfs: parseFloat(river.values[0].value[0].value),
+          usgs_station_id:river.sourceInfo.siteCode[0].value,
         })
-      },
+        return newArray;
+      })
+    })
+    .then(
       fetch('https://dwr.state.co.us/Rest/GET/api/v2/telemetrystations/telemetrystation/?abbrev=PLACHECO%2C+BCRMORCO%2C+BOCMIDCO%2C+PLADENCO%2C+PLACHACO%2C+PLAHARCO%2C+SVCLYOCO%2C+BTCANYCO%2C+CLAFTCCO%2C+BOCBGRCO', {
         method: 'GET'
       })
